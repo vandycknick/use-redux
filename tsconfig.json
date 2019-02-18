@@ -1,0 +1,9 @@
+{
+  "extends": "@nvd/tsconfig",
+  "compilerOptions": {
+    "lib": [
+      "es2017"
+    ],
+    "jsx": "react"
+  }
+}
