@@ -100,6 +100,7 @@ const dispatchActionsMapCache = new WeakMap<
         Dispatch<AnyAction>,
         WeakMap<ActionCreatorsMapObject, ActionCreatorsMapObject>
     >()
+
 /**
  * Binds dispatch to each action in the given actions object.
  * Returns that object which makes it easy to use object destructuring to only keep a reference to the action you need.

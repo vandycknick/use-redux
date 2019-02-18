@@ -1,11 +1,11 @@
 {
-  "name": "use-redux",
+  "name": "@nvd/use-redux",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "lint": "tslint --project tsconfig.json --config tslint.json",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "@nvd/tsconfig": "^1.0.0",

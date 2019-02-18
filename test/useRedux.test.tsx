@@ -26,7 +26,6 @@ describe("useRedux", () => {
         // Given
         const state = { items: [1, 2, 3], name: "test" }
         const store = mockStore(state)
-        const spy = jest.fn((s: any) => ({ first: s.items[0] }))
 
         // When
         let current
