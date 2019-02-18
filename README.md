@@ -22,7 +22,7 @@ import { Provider, useDispatch } from "@nvd/use-redux"
 
 const store = createStore(reducer)
 
-// Use hook utilities like to access current state and dispatch actions
+// Use hook utilities to access current state and dispatch actions
 const App = () => {
     const dispatch = useDispatch()
     const { counter } = useRedux()
@@ -59,7 +59,7 @@ ReactDOM.render(
 ```
 
 ### `useSelector`
-> <T, P>(selector: (state: T) => P) => P
+> &#x3C;T, P&#x3E;(selector: (state: T) =&#x3E; P) =&#x3E; P
 
 Takes a selector function used to select and return a subset of the current redux state. The selector function will get invoked immediately after creation and after each store update.
 
@@ -69,14 +69,14 @@ const TodoList = () => {
 
     return (
         <div>
-            { todos.map(t => <Todo item={t} />)}
+            { todos.map(t => <Todo item={t} />) }
         </div>
     )
 }
 ```
 
 ### `useActionCreators`
-> <A extends Action, M extends ActionCreatorsMapObject<A>>(actionCreators: M) => M
+> &#x3C;A extends Action, M extends ActionCreatorsMapObject&#x3C;A&#x3E;&#x3E;(actionCreators: M) =&#x3E; M
 
 Automatically bind a given map of action creators to the current stores dispatch function
 
@@ -88,7 +88,7 @@ const App = () => {
 ```
 
 ### `useRedux`
-> () => State
+> () =&#x3E; State
 
 Returns the whole state tree from the current store
 
@@ -100,7 +100,7 @@ const Count = () => {
 ```
 
 ### `useDispatch`
-> () => Dispatch<AnyAction>
+> () =&#x3E; Dispatch&#x3C;AnyAction&#x3E;
 
 Returns dispatch function from the current store.
 
