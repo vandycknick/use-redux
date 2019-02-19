@@ -1,6 +1,11 @@
 # useRedux
 React hook utility functions to access state and dispatch actions from a redux store.
 
+[![Build Status][azure-pipeline-badge]][azure-pipeline]
+
+[azure-pipeline]: https://dev.azure.com/vandycknick/use-redux/_build/latest?definitionId=8&branchName=master
+[azure-pipeline-badge]: https://dev.azure.com/vandycknick/use-redux/_apis/build/status/nickvdyck.use-redux?branchName=master
+
 ## Installation
 
 ```sh
