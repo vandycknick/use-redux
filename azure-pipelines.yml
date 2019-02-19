@@ -15,3 +15,6 @@ steps:
 
 - bash: npm test
   displayName: 'Run linting and unit tests'
+
+- bash: npm run build
+  displayName: 'Build library'
