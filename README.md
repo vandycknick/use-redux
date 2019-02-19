@@ -1,5 +1,5 @@
 # useRedux
-React hook utility functions to access state or dispatch actions from a redux store.
+React hook utility functions to access state and dispatch actions from a redux store.
 
 ## Installation
 

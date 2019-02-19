@@ -14,4 +14,4 @@ steps:
   displayName: 'Install dependencies'
 
 - bash: npm test
-  dispalyName: 'Run linting and unit tests'
+  displayName: 'Run linting and unit tests'
