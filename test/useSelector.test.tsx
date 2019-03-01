@@ -1,11 +1,13 @@
 import React from "react"
-import { testHook } from "react-testing-library"
+import { cleanup, renderHook } from "react-hooks-testing-library"
 
 import { Provider, useSelector } from "../src"
 import configureStore from "./__mocks__/mockStore"
 
 describe("useSelector", () => {
     const mockStore = configureStore()
+
+    afterEach(cleanup)
 
     it("should throw an error when used outside of a redux context", () => {
         // Given
@@ -17,7 +19,7 @@ describe("useSelector", () => {
             const error = console.error
             console.error = () => null
 
-            testHook(() => useSelector(selector))
+            renderHook(() => useSelector(selector))
 
             console.error = error
         }).toThrowError(msg)
@@ -31,7 +33,7 @@ describe("useSelector", () => {
 
         // When
         let selected
-        testHook(
+        renderHook(
             () => {
                 selected = useSelector(spy)
             },

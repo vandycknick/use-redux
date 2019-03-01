@@ -1,11 +1,13 @@
 import React from "react"
-import { testHook } from "react-testing-library"
+import { cleanup, renderHook } from "react-hooks-testing-library"
 
 import { Provider, useActionCreators } from "../src"
 import configureStore from "./__mocks__/mockStore"
 
 describe("useActionCreators", () => {
     const mockStore = configureStore()
+
+    afterEach(cleanup)
 
     it("should throw an error when used outside of a redux context", () => {
         // Given
@@ -16,7 +18,7 @@ describe("useActionCreators", () => {
             const error = console.error
             console.error = () => null
 
-            testHook(() => useActionCreators({}))
+            renderHook(() => useActionCreators({}))
 
             console.error = error
         }).toThrowError(msg)
@@ -31,7 +33,7 @@ describe("useActionCreators", () => {
         }
 
         // When
-        testHook(
+        renderHook(
             () => {
                 const { addTodo, removeTodo } = useActionCreators(creatorsMap)
 
@@ -58,7 +60,7 @@ describe("useActionCreators", () => {
         let mapThree
 
         // When
-        testHook(
+        renderHook(
             () => {
                 mapOne = useActionCreators(creatorsMap)
                 mapTwo = useActionCreators(creatorsMap)
@@ -66,7 +68,7 @@ describe("useActionCreators", () => {
             { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
         )
 
-        testHook(
+        renderHook(
             () => {
                 mapThree = useActionCreators(creatorsMap)
             },
@@ -94,7 +96,7 @@ describe("useActionCreators", () => {
         let mapFour
 
         // When
-        testHook(
+        renderHook(
             () => {
                 mapOne = useActionCreators(creatorsMap)
                 mapTwo = useActionCreators(creatorsMap)
@@ -102,7 +104,7 @@ describe("useActionCreators", () => {
             { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
         )
 
-        testHook(
+        renderHook(
             () => {
                 mapThree = useActionCreators(creatorsMap)
                 mapFour = useActionCreators(creatorsMap)

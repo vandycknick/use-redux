@@ -1,11 +1,13 @@
 import React from "react"
-import { testHook } from "react-testing-library"
+import { cleanup, renderHook } from "react-hooks-testing-library"
 
 import { Provider, useRedux } from "../src"
 import configureStore from "./__mocks__/mockStore"
 
 describe("useRedux", () => {
     const mockStore = configureStore()
+
+    afterEach(cleanup)
 
     it("should throw an error when used outside of a redux context", () => {
         // Given
@@ -16,7 +18,7 @@ describe("useRedux", () => {
             const error = console.error
             console.error = () => null
 
-            testHook(() => useRedux())
+            renderHook(() => useRedux())
 
             console.error = error
         }).toThrowError(msg)
@@ -29,7 +31,7 @@ describe("useRedux", () => {
 
         // When
         let current
-        testHook(
+        renderHook(
             () => {
                 current = useRedux()
             },
