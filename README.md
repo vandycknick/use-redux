@@ -26,7 +26,7 @@ npm i --save @nvd/use-redux
 ```tsx
 import React from "react"
 import { render } from "react-dom"
-import {createStore} from "redux"
+import { createStore } from "redux"
 import { Provider, useDispatch } from "@nvd/use-redux"
 
 const store = createStore(reducer)

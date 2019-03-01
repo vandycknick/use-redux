@@ -39,7 +39,7 @@ const useRedux = <T = any>(): T => {
         )
 
     const [currentState, setCurrentState] = useState(store.getState())
-    const lastDerivedState = useRef(currentState)
+    const previousState = useRef(currentState)
 
     useEffect(() => {
         let didUnsubscribe = false
@@ -49,9 +49,9 @@ const useRedux = <T = any>(): T => {
 
             const newState = store.getState()
 
-            if (!shallowEqual(newState, lastDerivedState.current)) {
+            if (!shallowEqual(newState, previousState.current)) {
                 setCurrentState(newState)
-                lastDerivedState.current = newState
+                previousState.current = newState
             }
         }
 
@@ -80,20 +80,20 @@ const useRedux = <T = any>(): T => {
 const useSelector = <T, P>(selector: (state: T) => P): P => {
     const state = useRedux()
 
-    const [mappedState, setMappedState] = useState(selector(state))
-    const lastMappedState = useRef(mappedState)
+    const [derivedState, setMappedState] = useState(selector(state))
+    const previousDerivedState = useRef(derivedState)
 
     useEffect(() => {
         const newMappedState = selector(state)
 
-        if (!shallowEqual(newMappedState, lastMappedState.current)) {
+        if (!shallowEqual(newMappedState, previousDerivedState.current)) {
             setMappedState(newMappedState)
-            lastMappedState.current = newMappedState
+            previousDerivedState.current = newMappedState
         }
 
     }, [state, selector])
 
-    return mappedState
+    return derivedState
 }
 
 const dispatchActionsMapCache = new WeakMap<
