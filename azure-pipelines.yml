@@ -7,14 +7,14 @@ steps:
   inputs:
     versionSpec: '10.15.1'
 
-- bash: node --version
+- bash: node --version && yarn --version
   displayName: 'Print versions'
 
-- bash: npm install
+- bash: yarn install
   displayName: 'Install dependencies'
 
-- bash: npm test
+- bash: yarn test
   displayName: 'Run linting and unit tests'
 
-- bash: npm run build
+- bash: yarn run build
   displayName: 'Build library'
