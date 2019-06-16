@@ -1,6 +1,6 @@
 {
   "name": "@nvd/use-redux",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React hook utility functions to access state and dispatch actions from a redux store.",
   "license": "MIT",
   "author": {
