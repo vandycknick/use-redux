@@ -11,32 +11,39 @@ const StoreContext = createContext<Store | null>(null)
 const Provider = StoreContext.Provider
 
 /**
+ * Returns the current redux store or throws an error when run outside a redux context
+ *
+ * @internal
+ */
+const useStore = (): Store<any, AnyAction> => {
+    const store = useContext(StoreContext)
+    if (!store) throw new Error(
+        "A redux store should be provided via the useRedux Provider component. <Provider value={store} />",
+    )
+    return store
+}
+
+/**
  * React hook that returns dispatch function from the current redux store.
  * Component must be wrapped inside Provider function!
+ *
  * @returns {Function} dispatch
  */
 const useDispatch = (): Dispatch<AnyAction> => {
-    const store = useContext(StoreContext)
-    if (!store)
-        throw new Error(
-            "A redux store should be provided via the useRedux Provider component. <Provider value={store} />",
-        )
-
+    const store = useStore()
     return store.dispatch
 }
 
 /**
  * React hook that returns the state from the current redux store.
  * Component must be wrapped inside Provider function!
+ *
+ * Prefer using useSelector!
+ *
  * @returns {*} state
  */
 const useRedux = <T = any>(): T => {
-    const store = useContext(StoreContext)
-
-    if (!store)
-        throw new Error(
-            "A redux store should be provided via the useRedux Provider component. <Provider value={store} />",
-        )
+    const store = useStore()
 
     const [currentState, setCurrentState] = useState(store.getState())
     const previousState = useRef(currentState)
@@ -74,6 +81,7 @@ const useRedux = <T = any>(): T => {
  * The selector function will be called with the Redux state and must return a new object.
  *
  * Equivalent to mapStateToProps in the redux-react connect function
+ *
  * @param {(state) => state} selector
  * @readonly {object}
  */
@@ -97,14 +105,15 @@ const useSelector = <T, P>(selector: (state: T) => P): P => {
 }
 
 const dispatchActionsMapCache = new WeakMap<
-        Dispatch<AnyAction>,
-        WeakMap<ActionCreatorsMapObject, ActionCreatorsMapObject>
-    >()
+    Dispatch<AnyAction>,
+    WeakMap<ActionCreatorsMapObject, ActionCreatorsMapObject>
+>()
 
 /**
  * Binds dispatch to each action in the given actions object.
  * Returns that object which makes it easy to use object destructuring to only keep a reference to the action you need.
  * Equivalent to mapDispatchToProps in the redux-react connect function when given an object
+ *
  * @param {*} actions
  * @returns {*} actions
  */
