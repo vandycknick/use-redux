@@ -12,7 +12,7 @@
   "scripts": {
     "build": "yarn run clean && tsc -p tsconfig.json",
     "clean": "del-cli dist",
-    "lint": "tslint --project tsconfig.json --config tslint.json",
+    "lint": "eslint --ext .ts,.tsx .",
     "prepublish": "yarn run build",
     "test": "yarn run lint && yarn run test-coverage",
     "test-coverage": "jest --coverage",
@@ -22,23 +22,29 @@
     "dist"
   ],
   "devDependencies": {
-    "@nvd/tsconfig": "^1.0.0",
-    "@testing-library/react": "^8.0.1",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.0.8",
-    "@types/react": "^16.8.20",
-    "del-cli": "^2.0.0",
-    "jest": "^24.8.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-hooks-testing-library": "^0.5.1",
-    "react-test-renderer": "^16.8.6",
-    "redux": "^4.0.1",
-    "ts-jest": "^24.0.2",
-    "ts-lint": "^4.5.1",
-    "tslint": "^5.17.0",
-    "tslint-microsoft-contrib": "^6.2.0",
-    "typescript": "^3.5.2"
+    "@nvd/tsconfig": "1.0.0",
+    "@testing-library/react": "9.1.4",
+    "@testing-library/react-hooks": "2.0.1",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.4",
+    "@types/react": "16.9.2",
+    "@typescript-eslint/eslint-plugin": "2.1.0",
+    "@typescript-eslint/parser": "2.1.0",
+    "del-cli": "2.0.0",
+    "eslint": "6.3.0",
+    "eslint-config-prettier": "6.2.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-react": "7.14.3",
+    "eslint-plugin-react-hooks": "2.0.1",
+    "jest": "24.9.0",
+    "prettier": "1.18.2",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-test-renderer": "16.9.0",
+    "redux": "4.0.4",
+    "ts-jest": "24.0.2",
+    "typescript": "3.6.2"
   },
   "peerDependencies": {
     "react": "^16.8.6",
@@ -46,5 +52,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "eslintIgnore": ["dist"]
 }

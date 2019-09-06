@@ -17,9 +17,10 @@ const Provider = StoreContext.Provider
  */
 const useStore = (): Store<any, AnyAction> => {
     const store = useContext(StoreContext)
-    if (!store) throw new Error(
-        "A redux store should be provided via the useRedux Provider component. <Provider value={store} />",
-    )
+    if (!store)
+        throw new Error(
+            "A redux store should be provided via the useRedux Provider component. <Provider value={store} />",
+        )
     return store
 }
 
@@ -51,7 +52,7 @@ const useRedux = <T = any>(): T => {
     useEffect(() => {
         let didUnsubscribe = false
 
-        const checkForUpdates = () => {
+        const checkForUpdates = (): void => {
             if (didUnsubscribe) return
 
             const newState = store.getState()
@@ -64,7 +65,7 @@ const useRedux = <T = any>(): T => {
 
         checkForUpdates()
         const unsubscribe = store.subscribe(checkForUpdates)
-        const unsubscribeWrapper = () => {
+        const unsubscribeWrapper = (): void => {
             didUnsubscribe = true
             unsubscribe()
         }
@@ -98,7 +99,6 @@ const useSelector = <T, P>(selector: (state: T) => P): P => {
             setMappedState(newMappedState)
             previousDerivedState.current = newMappedState
         }
-
     }, [state, selector])
 
     return derivedState
@@ -136,10 +136,4 @@ const useActionCreators = <A extends Action, M extends ActionCreatorsMapObject<A
     return boundActionCreators
 }
 
-export {
-    Provider,
-    useSelector,
-    useRedux,
-    useDispatch,
-    useActionCreators,
-}
+export { Provider, useSelector, useRedux, useDispatch, useActionCreators }

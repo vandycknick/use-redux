@@ -1,22 +1,21 @@
 import { AnyAction, applyMiddleware, Middleware, Reducer, Store } from "redux"
 
-const isFunction = (arg: any): boolean => typeof arg === "function"
+const isFunction = (arg: unknown): arg is Function => typeof arg === "function"
 
-type Listener = () => any
+type Listener = () => unknown
 
 interface MockStoreExtensions {
-    getActions: () => AnyAction[],
-    clearActions: () => void,
+    getActions: () => AnyAction[]
+    clearActions: () => void
 }
 
 const configureStore = (middleware: Middleware[] = []) =>
     function mockStore(getState = {}): Store & MockStoreExtensions {
-        const mockStoreWithoutMiddleware = () => {
+        const mockStoreWithoutMiddleware = (): any => {
             let actions: AnyAction[] = []
             const listeners: Listener[] = []
 
             const store = {
-
                 getState() {
                     return isFunction(getState) ? (getState as (arg: object) => object)(actions) : getState
                 },
@@ -33,7 +32,7 @@ const configureStore = (middleware: Middleware[] = []) =>
                     return action
                 },
 
-                clearActions: () => actions = [],
+                clearActions: () => (actions = []),
 
                 subscribe(cb: Listener) {
                     if (isFunction(cb)) {
@@ -54,7 +53,6 @@ const configureStore = (middleware: Middleware[] = []) =>
                         throw new Error("Next reducer should be a function!")
                     }
                 },
-
             }
 
             return store

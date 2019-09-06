@@ -1,5 +1,5 @@
 import React from "react"
-import { renderHook } from "react-hooks-testing-library"
+import { renderHook } from "@testing-library/react-hooks"
 
 import { Provider, useRedux } from "../src"
 import configureStore from "./__mocks__/mockStore"
@@ -22,18 +22,12 @@ describe("useRedux", () => {
         // Given
         const state = { items: [1, 2, 3], name: "test" }
         const store = mockStore(state)
+        const wrapper: React.FC = ({ children }) => <Provider value={store}>{children}</Provider>
 
         // When
-        let current
-        renderHook(
-            () => {
-                current = useRedux()
-            },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
-        )
+        const hook = renderHook(() => useRedux(), { wrapper })
 
         // Then
-        expect(current).toEqual(state)
+        expect(hook.result.current).toEqual(state)
     })
-
 })

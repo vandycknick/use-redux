@@ -1,5 +1,5 @@
 import React from "react"
-import { renderHook } from "react-hooks-testing-library"
+import { renderHook } from "@testing-library/react-hooks"
 
 import { Provider, useSelector } from "../src"
 import configureStore from "./__mocks__/mockStore"
@@ -10,7 +10,7 @@ describe("useSelector", () => {
     it("should throw an error when used outside of a redux context", () => {
         // Given
         const msg = "A redux store should be provided via the useRedux Provider component. <Provider value={store} />"
-        const selector = (state: any) => state
+        const selector = <T extends unknown>(state: T): T => state
 
         // When
         const hook = renderHook(() => useSelector(selector))
@@ -23,20 +23,14 @@ describe("useSelector", () => {
         // Given
         const state = { items: [1, 2, 3], name: "test" }
         const store = mockStore(state)
-        const spy = jest.fn((s: any) => ({ first: s.items[0] }))
+        const spy = jest.fn((s: typeof state) => ({ first: s.items[0] }))
+        const wrapper: React.FC = ({ children }) => <Provider value={store}>{children}</Provider>
 
         // When
-        let selected
-        renderHook(
-            () => {
-                selected = useSelector(spy)
-            },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
-        )
+        const hook = renderHook(() => useSelector(spy), { wrapper })
 
         // Then
         expect(spy).toHaveBeenCalledWith(state)
-        expect(selected).toEqual({ first: 1 })
+        expect(hook.result.current).toEqual({ first: 1 })
     })
-
 })

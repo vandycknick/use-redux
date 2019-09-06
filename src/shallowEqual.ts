@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const hasOwn = Object.prototype.hasOwnProperty
 
-function is(x: any, y: any) {
+function is(x: any, y: any): any {
     if (x === y) {
         return x !== 0 || y !== 0 || 1 / x === 1 / y
     } else {
@@ -11,12 +13,7 @@ function is(x: any, y: any) {
 const shallowEqual = (objA: any, objB: any): boolean => {
     if (is(objA, objB)) return true
 
-    if (
-        typeof objA !== "object" ||
-        objA === null ||
-        typeof objB !== "object" ||
-        objB === null
-    ) {
+    if (typeof objA !== "object" || objA === null || typeof objB !== "object" || objB === null) {
         return false
     }
 

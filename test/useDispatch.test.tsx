@@ -1,5 +1,5 @@
 import React from "react"
-import { renderHook } from "react-hooks-testing-library"
+import { renderHook } from "@testing-library/react-hooks"
 
 import { Provider, useDispatch } from "../src"
 import configureStore from "./__mocks__/mockStore"
@@ -21,6 +21,7 @@ describe("useDispatch", () => {
     it("should return a dispatch function that dispatches actions on the provided store", () => {
         // Given
         const store = mockStore()
+        const wrapper: React.FC = ({ children }) => <Provider value={store}>{children}</Provider>
 
         // When
         renderHook(
@@ -28,11 +29,10 @@ describe("useDispatch", () => {
                 const dispatch = useDispatch()
                 dispatch({ type: "TEST" })
             },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
+            { wrapper },
         )
 
         // Then
         expect(store.getActions()).toEqual([{ type: "TEST" }])
     })
-
 })

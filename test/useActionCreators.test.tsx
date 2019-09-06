@@ -1,5 +1,5 @@
 import React from "react"
-import { renderHook } from "react-hooks-testing-library"
+import { renderHook } from "@testing-library/react-hooks"
 
 import { Provider, useActionCreators } from "../src"
 import configureStore from "./__mocks__/mockStore"
@@ -25,6 +25,7 @@ describe("useActionCreators", () => {
             addTodo: () => ({ type: "ADD_TODO" }),
             removeTodo: () => ({ type: "REMOVE_TODO" }),
         }
+        const wrapper: React.FC = ({ children }) => <Provider value={store}>{children}</Provider>
 
         // When
         renderHook(
@@ -34,7 +35,7 @@ describe("useActionCreators", () => {
                 addTodo()
                 removeTodo()
             },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
+            { wrapper },
         )
 
         // Then
@@ -48,6 +49,7 @@ describe("useActionCreators", () => {
             addTodo: () => ({ type: "ADD_TODO" }),
             removeTodo: () => ({ type: "REMOVE_TODO" }),
         }
+        const wrapper: React.FC = ({ children }) => <Provider value={store}>{children}</Provider>
 
         let mapOne
         let mapTwo
@@ -59,14 +61,14 @@ describe("useActionCreators", () => {
                 mapOne = useActionCreators(creatorsMap)
                 mapTwo = useActionCreators(creatorsMap)
             },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
+            { wrapper },
         )
 
         renderHook(
             () => {
                 mapThree = useActionCreators(creatorsMap)
             },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
+            { wrapper },
         )
 
         // Then
@@ -83,6 +85,8 @@ describe("useActionCreators", () => {
             addTodo: () => ({ type: "ADD_TODO" }),
             removeTodo: () => ({ type: "REMOVE_TODO" }),
         }
+        const wrapper: React.FC = ({ children }) => <Provider value={store}>{children}</Provider>
+        const wrapper2: React.FC = ({ children }) => <Provider value={store2}>{children}</Provider>
 
         let mapOne
         let mapTwo
@@ -95,7 +99,7 @@ describe("useActionCreators", () => {
                 mapOne = useActionCreators(creatorsMap)
                 mapTwo = useActionCreators(creatorsMap)
             },
-            { wrapper: ({ children }) => <Provider value={store}>{children}</Provider> },
+            { wrapper },
         )
 
         renderHook(
@@ -103,7 +107,7 @@ describe("useActionCreators", () => {
                 mapThree = useActionCreators(creatorsMap)
                 mapFour = useActionCreators(creatorsMap)
             },
-            { wrapper: ({ children }) => <Provider value={store2}>{children}</Provider> },
+            { wrapper: wrapper2 },
         )
 
         // Then
@@ -114,5 +118,4 @@ describe("useActionCreators", () => {
         expect(mapTwo).not.toEqual(mapFour)
         expect(mapThree).toEqual(mapFour)
     })
-
 })
