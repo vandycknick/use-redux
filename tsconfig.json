@@ -1,11 +1,14 @@
 {
   "extends": "@nvd/tsconfig",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "lib",
     "lib": [
       "es2017"
     ],
-    "jsx": "react"
+    "jsx": "react",
+    "module": "commonjs",
+    "target": "es5"
+
   },
   "include": [
     "src",

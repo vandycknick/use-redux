@@ -8,10 +8,13 @@
     "url": "https://nvd.codes"
   },
   "repository": "nickvdyck/use-redux",
-  "main": "dist",
+  "main": "./lib",
+  "module": "./es/index.js",
   "scripts": {
-    "build": "yarn run clean && tsc -p tsconfig.json",
-    "clean": "del-cli dist",
+    "build": "yarn run clean && yarn build-cjs && yarn build-es",
+    "build-cjs": "tsc -p tsconfig.json",
+    "build-es": "tsc -p tsconfig.json --outDir es --module esnext",
+    "clean": "del-cli dist es",
     "lint": "eslint --ext .ts,.tsx .",
     "prepublish": "yarn run build",
     "test": "yarn run lint && yarn run test-coverage",
@@ -19,7 +22,8 @@
     "test-watch": "jest --watch"
   },
   "files": [
-    "dist"
+    "es",
+    "lib"
   ],
   "devDependencies": {
     "@nvd/tsconfig": "1.0.0",
@@ -54,6 +58,7 @@
     "access": "public"
   },
   "eslintIgnore": [
-    "dist"
+    "lib",
+    "es"
   ]
 }

@@ -30,9 +30,9 @@ const useStore = <T>(): Store<T, Action> => {
  *
  * @returns {Function} dispatch
  */
-const useDispatch = (): Dispatch<Action> => {
+const useDispatch = <TDispatch = Dispatch<Action>>(): TDispatch => {
     const store = useStore()
-    return store.dispatch
+    return (store.dispatch as any) as TDispatch
 }
 
 /**
