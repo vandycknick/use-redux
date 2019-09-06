@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react"
-import { Action, ActionCreatorsMapObject, AnyAction, bindActionCreators, Dispatch, Store } from "redux"
+import { Action, ActionCreatorsMapObject, bindActionCreators, Dispatch, Store } from "redux"
 
 import shallowEqual from "./shallowEqual"
 
@@ -15,7 +15,7 @@ const Provider = StoreContext.Provider
  *
  * @internal
  */
-const useStore = (): Store<any, AnyAction> => {
+const useStore = <T>(): Store<T, Action> => {
     const store = useContext(StoreContext)
     if (!store)
         throw new Error(
@@ -30,7 +30,7 @@ const useStore = (): Store<any, AnyAction> => {
  *
  * @returns {Function} dispatch
  */
-const useDispatch = (): Dispatch<AnyAction> => {
+const useDispatch = (): Dispatch<Action> => {
     const store = useStore()
     return store.dispatch
 }
@@ -43,8 +43,8 @@ const useDispatch = (): Dispatch<AnyAction> => {
  *
  * @returns {*} state
  */
-const useRedux = <T = any>(): T => {
-    const store = useStore()
+const useRedux = <T>(): T => {
+    const store = useStore<T>()
 
     const [currentState, setCurrentState] = useState(store.getState())
     const previousState = useRef(currentState)
@@ -87,7 +87,7 @@ const useRedux = <T = any>(): T => {
  * @readonly {object}
  */
 const useSelector = <T, P>(selector: (state: T) => P): P => {
-    const state = useRedux()
+    const state = useRedux<T>()
 
     const [derivedState, setMappedState] = useState(selector(state))
     const previousDerivedState = useRef(derivedState)
@@ -105,7 +105,7 @@ const useSelector = <T, P>(selector: (state: T) => P): P => {
 }
 
 const dispatchActionsMapCache = new WeakMap<
-    Dispatch<AnyAction>,
+    Dispatch<Action>,
     WeakMap<ActionCreatorsMapObject, ActionCreatorsMapObject>
 >()
 
